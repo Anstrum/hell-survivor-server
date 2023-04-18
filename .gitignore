@@ -1,0 +1,6 @@
+.idea
+.DS_Store
+*.bin
+*.exe
+*.txt
+firebase-admin-key.json
