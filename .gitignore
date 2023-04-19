@@ -4,3 +4,4 @@
 *.exe
 *.txt
 firebase-admin-key.json
+node_modules/
