@@ -5,6 +5,8 @@ import {isValidToken} from "../utils/jwt.js";
 
 export const checkUsernameAndPassword = (req, res, next) => {
     const { username, password } = req.body;
+    console.log(req.body)
+
 
     if (!isValidUsername(username)) {
         res.status(400).send(ErrorResponse.generate("Invalid username", 400));

@@ -1,6 +1,6 @@
 import Express from "express";
 import AuthController from "../controllers/auth-controller.js";
-import {checkTokenValidity, checkUsernameAndPassword, usernameAlreadyExists} from "../middleware/auth-middlewares.js";
+import {checkTokenValidity, checkUsernameAndPassword, usernameAlreadyExists} from "../middlewares/auth-middlewares.js";
 
 const authRouter = Express.Router();
 

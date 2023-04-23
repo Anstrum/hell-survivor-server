@@ -1,32 +1,66 @@
 import dgram from "dgram";
-import {isValidToken} from "../http/utils/jwt.js"
+import { isValidToken } from "../http/utils/jwt.js";
 const server = dgram.createSocket("udp4");
 
+//create game class
+class Players {
+	constructor() {
+		this.id = null
+		this.name = null;
+		this.hp = {}
+		this.isDead = {};
+	}
+}
+class Game {
+	constructor() {
+		this.players = [];
+		this.started = false;
+	}
+}
 
-server.on('error', (err) => {
-    console.log(`Server error:\n${err.stack}`);
-    server.close();
-  });
-  
-  server.on('message', (msg, rinfo) => {
-    console.log(`Received ${msg.length} bytes from ${rinfo.address}:${rinfo.port}`);
-    console.log(`Message: ${msg.toString()}`);
-  });
-  server.bind(12345); // Replace 12345 with your desired port number
-  
-  server.on('listening', () => {
-  });
-  
 
-// server.on("message", (msg, info) => {
-//     console.log(msg.toString());
-//     console.log(info.address);
-//     if(isValidToken(msg.toString())){
-//         console.log("token valid");
-//     }
-// })
-// server.on("listening", () => {
-//     console.log("listening udp server in port 87887");
-// })
+server.on("message", (msg, info) => {
+	let body = getBody(msg)
+	if(!body) return
 
-// server.bind(87887)
+	switch(body.requestType) {
+		case "connection":
+			if (isValidToken(body.token)) {
+				server.send("connected", info.port, info.address);
+			}
+			break;
+		case "findGame":
+			if ( !isValidToken(body.token)) {
+				return
+			}
+			//find if body.token is in lobby
+			let index = lobby.findIndex((item) => item.token === body.token);
+			if (index === -1) {
+				//if not in lobby, add to lobby
+				lobby.push({ token: body.token, port: info.port, address: info.address });
+			} else {
+				//if in lobby, remove from lobby and send to game
+			}
+			break;
+		default:
+			break;
+	}
+});
+
+
+//handles bad json format
+function getBody(msg) {
+	let body
+	try {
+		body = JSON.parse(msg.toString());
+	} catch (error) {
+		body = null
+	}
+	return body
+}
+
+server.on("listening", () => {
+	console.log("listening udp server in port 12345");
+});
+
+server.bind(12345);
