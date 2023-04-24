@@ -57,7 +57,7 @@ export class Game {
 		}, 1 / 60 * 1000);
 	}
 	static CheckStart(server) {
-		if(Game.players.length >= Game.minPlayers){
+		if(Game.players.length >= Game.minPlayers && !Game.starting && !Game.started){
 			Game.startGame(server);
 		}
 	}

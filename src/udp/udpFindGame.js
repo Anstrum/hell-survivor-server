@@ -54,5 +54,6 @@ export function findGame(server, body, info) {
             answer.timeToStart = null;
         }
     };
+    console.log("test")
     server.send(JSON.stringify(answer), info.port, info.address);
 }
