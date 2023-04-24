@@ -16,7 +16,7 @@ export function findGame(server, body, info) {
     if (index === -1) {
         if( Game.started) {
             //game is already started
-            answer.requestType = "MATCHING";
+            answer.searchState = "MATCHING";
             answer.playerCount = null;
             answer.timeToStart = null;
         } else {
@@ -54,6 +54,5 @@ export function findGame(server, body, info) {
             answer.timeToStart = null;
         }
     };
-    console.log("test")
     server.send(JSON.stringify(answer), info.port, info.address);
 }
