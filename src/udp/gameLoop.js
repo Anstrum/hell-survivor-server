@@ -16,10 +16,13 @@ export function gameLoop(server, dt) {
     if (Game.started) {
         Game.map.reduce(dt);
         Game.players.forEach((player) => {
-            if (!player.inGame) {
-                return
+            if (player.inGame) {
+                let data = {
+                    requestType: "gameUpdate",
+                    mapRadius: Game.map.radius,
+                }
+                player.sendData(server, data, player.info);
             }
-            // player.sendData(server, player, player.info);
         });
     }
 }
