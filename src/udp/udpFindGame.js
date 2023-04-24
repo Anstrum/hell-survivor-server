@@ -5,7 +5,7 @@ import { Game, Players } from "./models.js";
 //export connection function
 export function findGame(server, body, info) {
     let index = Game.players.findIndex((player) => player.token === body.token);
-
+    console.log("test")
     let answer = {
         requestType: "findGame",
         searchState: null,
