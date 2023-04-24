@@ -9,21 +9,26 @@ import {usernameAlreadyExists} from "../utils/utils.js";
 
 export default class UserController {
     /**
-     * get best scores of all users
-     * @param req {Express.Request}
-     * @param res {Express.Response}
-     */
-    static getBestScores(req, res) {
-
-    }
-
-    /**
      * get user scores
      * @param req {Express.Request}
      * @param res {Express.Response}
      */
-    static getUserScores(req, res) {
+    static ranks(req, res) {
+        const firebase = new Firebase()
+        const usersRef = firebase.db.collection('users');
 
+        usersRef.orderBy("rank", "desc").get().then((querySnapshot) => {
+            let users = []
+
+            querySnapshot.forEach((doc) => {
+                users.push(doc.data())
+            })
+
+            res.status(200).send(SuccessResponse.generateWithData(users))
+        }).catch(error => {
+            res.status(500).send(ErrorResponse.generate(error.message, 500))
+            console.log(error)
+        })
     }
 
     /**

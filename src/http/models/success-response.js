@@ -10,4 +10,17 @@ export default class SuccessResponse {
             message
         }
     }
+
+    /***
+     * Generate a success response with any data
+     * @param message {string}
+     * @param data {any}
+     * @returns {{success: boolean, message}}
+     */
+    static generateWithData(data) {
+        return {
+            success: true,
+            data
+        }
+    }
 }
