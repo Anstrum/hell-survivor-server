@@ -24,6 +24,7 @@ export function findGame(server, body, info) {
             let player = new Players();
                 player.id = body.id;
                 player.token = body.token;
+                player.info = info;
 
                 Game.players.push(player);
                 Game.CheckStart(server);
