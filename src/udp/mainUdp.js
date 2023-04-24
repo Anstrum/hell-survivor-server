@@ -2,7 +2,8 @@ import dgram from "dgram";
 import { isValidToken } from "../http/utils/jwt.js";
 import { connection } from "./udpConnextion.js";
 import { findGame } from "./udpFindGame.js";
-import { Game, Players } from "./models.js";
+import { Game } from "./models.js";
+import { playerUpdate } from "./udpPlayerUpdate.js";
 
 const server = dgram.createSocket("udp4");
 
@@ -33,7 +34,7 @@ server.on("message", (msg, info) => {
 			Game.CheckStart(server)
 		break;
 		case "playerUpdate":
-			gameUpdate(server, body, info)
+			playerUpdate(server, body, info)
 		break;
 	}
 });

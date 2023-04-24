@@ -8,6 +8,7 @@ export class Players {
 		this.id = null;
 		this.hp = null;
 		this.isDead = null;
+		this.inGame = false;
 
 		this.sendData = (server, data, info) => {
 			server.send(JSON.stringify(data), info.port, info.address)
