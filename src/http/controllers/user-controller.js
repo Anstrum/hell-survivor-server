@@ -6,6 +6,7 @@ import ErrorResponse from "../models/error-response.js";
 import SuccessResponse from "../models/success-response.js";
 import {hashPassword} from "../utils/bcrypt.js";
 import {usernameAlreadyExists} from "../utils/utils.js";
+import {userToDto} from "../utils/user-mapper.js";
 
 export default class UserController {
     /**
@@ -21,7 +22,7 @@ export default class UserController {
             let users = []
 
             querySnapshot.forEach((doc) => {
-                users.push(doc.data())
+                users.push(userToDto(doc.data(), doc.id))
             })
 
             res.status(200).send(SuccessResponse.generateWithData(users))
