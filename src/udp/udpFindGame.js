@@ -5,34 +5,54 @@ import { Game, Players } from "./models.js";
 //export connection function
 export function findGame(server, body, info) {
     let index = Game.players.findIndex((player) => player.token === body.token);
+
     let answer = {
         requestType: "findGame",
-        gameFound: false,
-        lobbyId: null,
+        searchState: null,
         playerCount: null,
+        timeToStart: null,
     }
 
     if (index === -1) {
         if( Game.started) {
-            answer.gameFound = false;
-            answer.lobbyId = null;
+            //game is already started
+            answer.requestType = "MATCHING";
             answer.playerCount = null;
+            answer.timeToStart = null;
         } else {
+            //add player to the game
             let player = new Players();
                 player.id = body.id;
-                player.name = body.name;
                 player.token = body.token;
 
                 Game.players.push(player);
 
-            answer.gameFound = true;
-            answer.lobbyId = Game.id;
-            answer.playerCount = Game.players.length;
+
+                //check game state
+                if(Game.starting) {
+                    answer.searchState = "STARTING";
+                    answer.playerCount = Game.players.length;
+                    answer.timeToStart = Game.startCount;
+                } else {
+                    answer.searchState = "MATCHING";
+                    answer.playerCount = Game.players.length;
+                    answer.timeToStart = null;
+                }
         }
     } else {
-        answer.gameFound = true;
-        answer.lobbyId = Game.id;
+        answer.searchState = "MATCHING";
         answer.playerCount = Game.players.length;
+        answer.timeToStart = null;
+        if(Game.starting) {
+            answer.searchState = "STARTING";
+            answer.playerCount = Game.players.length;
+            answer.timeToStart = Game.startCount;
+        } 
+        if(Game.started) {
+            answer.searchState = "STARTED";
+            answer.playerCount = Game.players.length;
+            answer.timeToStart = null;
+        }
     };
     server.send(JSON.stringify(answer), info.port, info.address);
 }

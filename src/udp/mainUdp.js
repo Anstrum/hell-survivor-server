@@ -30,18 +30,22 @@ server.on("message", (msg, info) => {
 		break;
 		case "findGame":
 			findGame(server, body, info);
-			if(Game.players.length >= Game.minPlayers){
-				
-			}
+			Game.CheckStart(server)
 		break;
-
-		default:
+		case "playerUpdate":
+			gameUpdate(server, body, info)
 		break;
 	}
 });
 
+
+
+
 server.on("listening", () => {
 	console.log("listening udp server in port 12345");
+	if(Game.players.length >= Game.minPlayers){
+		Game.startGame();
+	}
 });
 
 server.bind(12345);
