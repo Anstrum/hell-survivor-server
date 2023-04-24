@@ -28,8 +28,10 @@ server.on("message", (msg, info) => {
 	switch (body.requestType) {
 		case "connection":
 			connection(server, body, info);
+			console.log("User " + info.address + " connected with port " + info.port)
 		break;
 		case "findGame":
+			console.log("User " + info.address + " is searching for a game")
 			findGame(server, body, info);
 			Game.CheckStart(server)
 		break;
@@ -37,10 +39,12 @@ server.on("message", (msg, info) => {
 			if(Game.started) {
 				let index = Game.players.findIndex((player) => player.token === body.token);
 				if (index === -1) return;
+				console.log("User " + info.address + " is ready to play")
 				Game.players[index].inGame = true;
 			}
 			break;
 		case "playerUpdate":
+			console.log("User " + info.address + " is updating his inputs")
 			playerUpdate(server, body, info)
 		break;
 	}

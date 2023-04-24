@@ -15,12 +15,12 @@ export function findGame(server, body, info) {
 
     if (index === -1) {
         if( Game.started) {
-            //game is already started
+            console.log("Game already started")
             answer.searchState = "MATCHING";
             answer.playerCount = null;
             answer.timeToStart = null;
         } else {
-            //add player to the game
+            console.log("User added to game")
             let player = new Players();
                 player.id = body.id;
                 player.token = body.token;

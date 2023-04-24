@@ -41,6 +41,7 @@ export class Game {
     static starting = false;
     static started = false;
 	static startCount = 0;
+	static roundedStartCount = 0;
 
 	static map = new Map()
 
@@ -52,6 +53,7 @@ export class Game {
 		});
 
 		Game.startCount = 10;
+		Game.roundedStartCount = 10;
 		Game.starting = true;
 		setInterval(() => {
 			gameLoop(server, 1 / 60);
