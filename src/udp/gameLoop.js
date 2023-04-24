@@ -16,7 +16,9 @@ export function gameLoop(server, dt) {
     if (Game.started) {
         Game.map.reduce(dt);
         Game.players.forEach((player) => {
-            //update game
+            if (!player.inGame) {
+                return
+            }
             // player.sendData(server, player, player.info);
         });
     }

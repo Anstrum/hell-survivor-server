@@ -33,6 +33,13 @@ server.on("message", (msg, info) => {
 			findGame(server, body, info);
 			Game.CheckStart(server)
 		break;
+		case "inGame":
+			if(Game.started) {
+				let index = Game.players.findIndex((player) => player.token === body.token);
+				if (index === -1) return;
+				Game.players[index].inGame = true;
+			}
+			break;
 		case "playerUpdate":
 			playerUpdate(server, body, info)
 		break;
