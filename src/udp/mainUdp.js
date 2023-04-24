@@ -30,6 +30,9 @@ server.on("message", (msg, info) => {
 		break;
 		case "findGame":
 			findGame(server, body, info);
+			if(Game.players.length >= Game.minPlayers){
+				
+			}
 		break;
 
 		default:

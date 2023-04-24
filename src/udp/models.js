@@ -11,7 +11,8 @@ export class Players {
 
 export class Game {
     static id = "La seule game du serveur";
-    static maxPlayers = 1;
+    static maxPlayers = 5;
+    static minPlayers = 1;
     static players = [];
     static started = false;
 
