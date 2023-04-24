@@ -34,8 +34,8 @@ class Map {
 
 export class Game {
     static id = "La seule game du serveur";
-    static maxPlayers = 5;
-    static minPlayers = 0;
+    static maxPlayers = 10;
+    static minPlayers = 1;
     static players = [];
     static starting = false;
     static started = false;

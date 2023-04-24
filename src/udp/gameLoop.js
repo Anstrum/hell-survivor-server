@@ -4,8 +4,11 @@ export function gameLoop(server, dt) {
  
     if (Game.starting) {
         if (Game.startCount > 0) {
-            Game.startCount -= 0.5;
+            Game.startCount -= 1.5 * dt;
+            console.log("Game Start in: " + Math.floor(Game.startCount))
         } else {
+            Game.startCount = 0;
+            console.log("Game Started")
             Game.starting = false;
             Game.started = true;
         }

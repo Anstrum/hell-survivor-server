@@ -43,9 +43,7 @@ server.on("message", (msg, info) => {
 
 server.on("listening", () => {
 	console.log("listening udp server in port 12345");
-	if(Game.players.length >= Game.minPlayers){
-		Game.startGame();
-	}
+	// Game.startGame(server)
 });
 
 server.bind(12345);

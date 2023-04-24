@@ -26,7 +26,7 @@ export function findGame(server, body, info) {
                 player.token = body.token;
 
                 Game.players.push(player);
-
+                Game.CheckStart(server);
 
                 //check game state
                 if(Game.starting) {
