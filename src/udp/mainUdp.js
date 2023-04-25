@@ -1,6 +1,6 @@
 import dgram from "dgram";
 import { isValidToken } from "../http/utils/jwt.js";
-import { connection } from "./udpConnextion.js";
+import { connection } from "./udpConnection.js";
 import { findGame } from "./udpFindGame.js";
 import { Game } from "./models.js";
 import { playerUpdate } from "./udpPlayerUpdate.js";
