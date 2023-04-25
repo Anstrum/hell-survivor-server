@@ -2,11 +2,10 @@ import ErrorResponse from "../models/error-response.js";
 import {isValidPassword, isValidUsername} from "../utils/extensions/string.js";
 import Firebase from "../utils/firebase.js";
 import {isValidToken} from "../utils/jwt.js";
+import {usernameAlreadyExists} from "../utils/utils.js";
 
 export const checkUsernameAndPassword = (req, res, next) => {
     const { username, password } = req.body;
-    console.log(req.body)
-
 
     if (!isValidUsername(username)) {
         res.status(400).send(ErrorResponse.generate("Invalid username", 400));
@@ -20,24 +19,15 @@ export const checkUsernameAndPassword = (req, res, next) => {
     next();
 }
 
-export const usernameAlreadyExists = (req, res, next) => {
-    const { username } = req.body;
-    const firebase = new Firebase()
-    const usersRef = firebase.db.collection('users');
+export const checkIfUsernameAlreadyExists = async (req, res, next) => {
+    let { username } = req.body;
 
-    usersRef
-        .where('username', '==', username)
-        .get()
-        .then(snapshot => {
-            if (!snapshot.empty) {
-                res.status(400).send(ErrorResponse.generate("Username already exists", 400));
-                return;
-            }
-            next();
-        })
-        .catch((error) => {
-            res.status(500).send(ErrorResponse.generate(error.message, 500));
-        })
+    if (await usernameAlreadyExists(username)) {
+        res.status(400).send(ErrorResponse.generate("Username already exists", 400));
+        return
+    }
+
+    next()
 }
 
 export const checkTokenValidity = (req, res, next) => {

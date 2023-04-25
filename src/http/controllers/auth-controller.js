@@ -24,7 +24,8 @@ export default class AuthController {
 
             usersRef.add({
                 username,
-                password: hash
+                password: hash,
+                rank: 0
             }).then(doc => {
                 res.send(AuthResponse.generate(generateToken(username, doc.id), username));
             }).catch((error) => {

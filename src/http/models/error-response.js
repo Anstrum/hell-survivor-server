@@ -1,5 +1,4 @@
 export default class ErrorResponse {
-
     /**
      *
      * @param message {string}
